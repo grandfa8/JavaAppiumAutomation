@@ -4,26 +4,32 @@ import org.junit.Test;
 
 public class MainClassTest extends MainClass {
     @Test
-    public void testGetClassNumber() {
-        int actual = this.getClassNumber();
-        int expected = 45;
+    public void testGetClassString() {
+        String actual = this.getClassString();
+        String expected = "hello|Hello";
 
         Assert.assertTrue(
-                this.failedGreaterThanNumberMessage(actual, expected),
-                greaterThan(actual, expected)
+                failedContainsSubstringMessage(actual, expected),
+                stringContains(actual, expected)
         );
     }
 
-    private String failedGreaterThanNumberMessage(int actual, int expected) {
-        String msgTemplate = "Actual number '%s' less or equal than expected number '%s'";
+    private String failedContainsSubstringMessage(String actual, String expected) {
+        String msgTemplate = "Actual string '%s' does not contain at least one of the expected substring: '%s'";
         return String.format(msgTemplate, actual, expected);
     }
 
-    private boolean greaterThan(int actual, int expected) {
-        if (actual > expected) {
-            return true;
-        } else {
-            return false;
+    private boolean stringContains(String actual, String expected) {
+        String[] substrings = expected.split("\\|");
+
+        boolean result = false;
+        for (String substring : substrings) {
+            System.out.println(substring);
+            result = actual.contains(substring);
+            if (result) {
+                break;
+            }
         }
+        return result;
     }
 }
