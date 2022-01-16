@@ -9,21 +9,8 @@ public class MainClassTest extends MainClass {
         int expected = 45;
 
         Assert.assertTrue(
-                this.failedGreaterThanNumberMessage(actual, expected),
-                greaterThan(actual, expected)
+                String.format("Actual number '%s' less or equal than expected number '%s'", actual, expected),
+                actual > expected
         );
-    }
-
-    private String failedGreaterThanNumberMessage(int actual, int expected) {
-        String msgTemplate = "Actual number '%s' less or equal than expected number '%s'";
-        return String.format(msgTemplate, actual, expected);
-    }
-
-    private boolean greaterThan(int actual, int expected) {
-        if (actual > expected) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
