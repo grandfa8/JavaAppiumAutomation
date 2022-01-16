@@ -8,14 +8,9 @@ public class MainClassTest extends MainClass {
         int expected = 14;
 
         Assert.assertEquals(
-                this.notEqualsNumberMessage(actual, expected),
+                String.format("Actual '%s' number not equal expected  '%s' number", actual, expected),
                 expected,
                 actual
         );
-    }
-
-    private String notEqualsNumberMessage(int actual, int expected) {
-        String msgTemplate = "Actual number '%s' not equal expected number '%s'";
-        return String.format(msgTemplate, actual, expected);
     }
 }
