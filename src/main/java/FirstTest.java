@@ -133,6 +133,44 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCancelSearch2() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search…')]"),
+                "Java",
+                "Cannot find 'Object-oriented programming language' topic seaching by 'Java'",
+                5
+        );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Cannot find search results"
+        );
+
+        int articles = driver.findElements(
+                By.id("org.wikipedia:id/page_list_item_title")
+        ).size();
+        Assert.assertTrue(
+                "Not found multiple articles",
+                articles>1
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find X to cancel search",
+                5
+        );
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Cannot find search results",
+                5
+        );
+
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
