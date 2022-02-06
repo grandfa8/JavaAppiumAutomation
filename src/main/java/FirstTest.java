@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
     private AppiumDriver driver;
@@ -151,12 +152,12 @@ public class FirstTest {
                 "Cannot find search results"
         );
 
-        int articles = driver.findElements(
+        List<WebElement> articles = driver.findElements(
                 By.id("org.wikipedia:id/page_list_item_title")
-        ).size();
-        Assert.assertTrue(
-                "Not found multiple articles",
-                articles>1
+        );
+        assertSearchHasMultipleResults(
+                articles,
+                "Not found multiple articles"
         );
         waitForElementAndClick(
                 By.id("org.wikipedia:id/search_close_btn"),
@@ -211,6 +212,19 @@ public class FirstTest {
         Assert.assertTrue(
                 error_message,
                 element.getText().contains(text)
+        );
+    }
+
+    private void assertElementsHasText(List<WebElement> results, String text, String error_message) {
+        for (WebElement result : results) {
+            assertElementHasText(result, text, error_message);
+        }
+    }
+
+    private void assertSearchHasMultipleResults(List<WebElement> results, String error_message) {
+        Assert.assertTrue(
+                error_message,
+                results.size() > 1
         );
     }
 }
